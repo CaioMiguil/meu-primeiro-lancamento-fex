@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meu Primeiro Lançamento · FEX Educação</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Montserrat', system-ui, sans-serif; background: #FAF8F6; color: #1a1a1a; min-height: 100vh; }
+    header { background: #000; border-bottom: 3px solid #32CD32; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; }
+    header .logo { font-weight: 700; font-size: 15px; color: #fff; }
+    header .logo span { color: #32CD32; }
+    .container { max-width: 760px; margin: 0 auto; padding: 28px 20px 20px; }
+    footer { text-align: center; padding: 20px; border-top: 1px solid #ECE6E0; margin-top: 20px; }
+    footer .nome { font-weight: 700; font-size: 13px; }
+    footer .sub { font-size: 11px; color: #888; margin-top: 3px; }
+
+    /* progress */
+    .progress-bar-wrap { height: 4px; background: #E4E0D9; border-radius: 4px; margin-bottom: 26px; }
+    .progress-bar { height: 100%; background: #32CD32; border-radius: 4px; transition: width .3s; }
+    .step-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 6px; }
+    h2.step-title { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    p.step-sub { color: #888; font-size: 14px; margin-bottom: 24px; }
+
+    /* fields */
+    .field { margin-bottom: 22px; }
+    .field label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 10px; }
+    .field input, .field textarea { width: 100%; padding: 12px 14px; border: 1px solid #CFC8C0; border-radius: 10px; font-size: 14px; font-family: inherit; background: #fff; outline: none; }
+    .field textarea { resize: vertical; }
+    .opt-btn { display: block; width: 100%; text-align: left; padding: 12px 14px; border: 1.5px solid #CFC8C0; background: #fff; border-radius: 10px; font-size: 14px; font-family: inherit; cursor: pointer; margin-bottom: 8px; }
+    .opt-btn.active { border-color: #32CD32; background: #E8F5E9; font-weight: 600; }
+
+    /* nav buttons */
+    .nav { display: flex; justify-content: space-between; margin-top: 24px; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; background: #000; color: #fff; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-ghost { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; background: transparent; color: #555; border: 1px solid #CFC8C0; border-radius: 10px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; }
+    .btn-ghost:disabled { opacity: 0.3; cursor: not-allowed; }
+    .alert-warn { margin-top: 18px; padding: 10px 14px; background: #FEF9E7; border: 1px solid #F4E2A1; border-radius: 8px; font-size: 13px; color: #7a5d00; }
+
+    /* result */
+    .card { background: #fff; border: 1px solid #E4E0D9; border-radius: 12px; padding: 16px 18px; margin-bottom: 14px; }
+    .card-green { background: #E8F5E9; border-color: #C8E6C9; }
+    .card-black { background: #000; color: #fff; border: none; }
+    .card h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; border-left: 3px solid #32CD32; padding-left: 8px; }
+    .progress-wrap2 { display: flex; align-items: center; gap: 14px; }
+    .prog-meta { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; }
+    .prog-meta span:last-child { font-weight: 700; }
+    .prog-track { height: 8px; background: #E4E0D9; border-radius: 6px; }
+    .prog-fill { height: 100%; background: #32CD32; border-radius: 6px; transition: width .3s; }
+    .fase-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+    .fase-icon { background: #000; color: #32CD32; border-radius: 8px; padding: 6px 8px; font-size: 18px; line-height: 1; }
+    .fase-title { font-weight: 700; font-size: 16px; }
+    .fase-janela { font-size: 12px; font-weight: 600; }
+    .fase-obj { font-size: 13px; color: #777; font-style: italic; margin-bottom: 10px; }
+    .task-row { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid #F0EBE5; cursor: pointer; align-items: flex-start; }
+    .task-row:last-child { border-bottom: none; }
+    .checkbox { width: 20px; height: 20px; border-radius: 6px; border: 2px solid #CFC8C0; background: #fff; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+    .checkbox.done { background: #32CD32; border-color: #32CD32; }
+    .task-prazo { display: inline-block; background: #000; color: #32CD32; font-weight: 700; font-size: 11px; padding: 1px 7px; border-radius: 5px; margin-right: 8px; }
+    .task-text { font-size: 14px; line-height: 1.5; }
+    .task-text.done { color: #aaa; text-decoration: line-through; }
+    .result-actions { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+    .card-black .label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #32CD32; margin-bottom: 8px; }
+    .card-black .content { font-size: 16px; font-weight: 500; line-height: 1.5; }
+    ul.offline-list { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.7; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo">Meu Primeiro Lançamento <span>· FEX Educação</span></div>
+</header>
+
+<div class="container" id="app"></div>
+
+<footer>
+  <div class="nome">FEX Educação</div>
+  <div class="sub">Única faculdade brasileira especializada em educação corporativa sob medida com validade acadêmica.</div>
+  <div class="sub" style="margin-top:4px">fexeducacao.edu.br · #sejaFEX</div>
+</footer>
+
+<script>
+const steps = [
+  {
+    id: "identificacao", title: "Quem é você", subtitle: "Para eu personalizar tudo no seu nome.",
+    fields: [
+      { key:"nome", label:"Seu nome completo", type:"text", placeholder:"Ex: Joana Almeida" },
+      { key:"email", label:"Seu melhor e-mail", type:"text", placeholder:"voce@email.com" },
+      { key:"whatsapp", label:"Seu WhatsApp (com DDD)", type:"text", placeholder:"(11) 90000-0000" },
+      { key:"instagram", label:"@ do Instagram (opcional)", type:"text", placeholder:"@seuperfil", optional:true },
+    ]
+  },
+  {
+    id: "produto", title: "O que você vende", subtitle: "É isso que o pitch do seu evento vai oferecer no final.",
+    fields: [
+      { key:"tipo", label:"O que você vai vender no fim do evento?", type:"radio", options:["Curso online","Mentoria","Consultoria / serviço","Ainda estou definindo"] },
+      { key:"nomeProduto", label:"Nome do seu produto (se já tiver)", type:"text", placeholder:"Ex: Método Renascer", optional:true },
+      { key:"tema", label:"Sobre o que é?", type:"text", placeholder:"Ex: emagrecimento para mães" },
+      { key:"transformacao", label:"Qual transformação a pessoa tem ao comprar?", type:"textarea", placeholder:"De onde ela sai e aonde ela chega" },
+      { key:"entregaveis", label:"O que está incluído? (módulos, encontros, bônus, suporte)", type:"textarea", placeholder:"Liste tudo que a pessoa recebe" },
+      { key:"preco", label:"Preço que pretende cobrar (R$)", type:"text", placeholder:"Ex: 1997 (ou 'não sei ainda')" },
+    ]
+  },
+  {
+    id: "publico", title: "Para quem", subtitle: "Quanto mais específico, melhor fica o convite.",
+    fields: [
+      { key:"avatar", label:"Quem é a pessoa ideal para comprar de você?", type:"textarea", placeholder:"Momento de vida, dor, desejo" },
+      { key:"dorPrincipal", label:"Qual a DOR número 1 dessa pessoa?", type:"textarea", placeholder:"O problema concreto que ela quer resolver agora" },
+      { key:"audiencia", label:"Quantas pessoas você consegue convidar hoje?", type:"radio", options:["Quase ninguém, vou começar do zero","Algumas dezenas","Algumas centenas","Mais de mil pessoas"] },
+    ]
+  },
+  {
+    id: "contexto", title: "Seu momento", subtitle: "Isso ajusta o ritmo do seu cronograma.",
+    fields: [
+      { key:"experiencia", label:"Já fez algum evento ou live antes?", type:"radio", options:["Nunca, vai ser a primeira vez","Já fiz lives mas nunca vendi","Já vendi algo, mas pouco"] },
+      { key:"prazo", label:"Em quanto tempo quer fazer seu evento?", type:"radio", options:["Em 2 semanas","Em 1 mês","Em 6 a 8 semanas"] },
+      { key:"offline", label:"Tem contato presencial com seu público?", type:"radio", options:["Sim, no meu trabalho/cidade","Um pouco","Não, é tudo online"] },
+      { key:"medo", label:"O que mais te trava nesse lançamento?", type:"textarea", placeholder:"Seja honesta, isso me ajuda a te orientar." },
+    ]
+  }
+];
+
+let stepIdx = 0, data = {}, checked = {}, report = null;
+
+function buildPlan(d) {
+  const nome = (d.nome||"").split(" ")[0]||"";
+  const produto = d.nomeProduto?.trim()||d.tema||"seu produto";
+  const dor = (d.dorPrincipal||"a dor do seu público").trim();
+  const preco = d.preco&&/\d/.test(d.preco)?`R$ ${d.preco.replace(/[^\d.,]/g,"")}`:"o valor que você definir";
+  const zeroAud = d.audiencia?.includes("Quase")||d.audiencia?.includes("dezenas");
+  const semOff = d.offline?.includes("Não");
+  const novata = d.experiencia?.includes("Nunca");
+  const inicioPre = d.prazo?.includes("2 semanas")?10:d.prazo?.includes("1 mês")?18:30;
+  const carrinhoDias = 6;
+
+  const resumo = `${nome?nome+", ":""}seu lançamento tem 4 fases: PRÉ (você atrai e aquece o público no grupo de WhatsApp), EVENTO (sua aula ao vivo de 2 a 3h com o pitch no final), CARRINHO ABERTO (os ${carrinhoDias} dias em que você vende) e PÓS (você fecha as últimas vendas e organiza os próximos passos). O Dia 0 é o dia do seu evento. ${novata?"É sua primeira vez, então siga o checklist na ordem, sem pular etapas.":"Use o checklist para não perder nenhuma ação no caminho."}`;
+
+  const fases = [
+    {
+      chave:"pre", titulo:"Fase 1 · Pré-lançamento", janela:`D-${inicioPre} até D-1`, icone:"📣",
+      objetivo:"Encher o grupo de WhatsApp de pessoas certas e aquecer o desejo antes do evento.",
+      tarefas:[
+        {prazo:`D-${inicioPre}`,texto:`Defina data e horário do evento e crie o grupo de WhatsApp. Nome ligado ao resultado, ex: "Evento: ${d.tema||"sua transformação"}".`},
+        {prazo:`D-${inicioPre}`,texto:`Escreva sua frase de convite (gancho) e coloque o link do grupo na bio do Instagram e no status do WhatsApp.`},
+        {prazo:`D-${Math.round(inicioPre*.6)}`,texto:zeroAud?`Convide individualmente as primeiras pessoas que já te conhecem. Mande uma a uma, sem vergonha.`:`Avise toda a sua audiência (stories, posts, status) que vai abrir um grupo gratuito com vagas limitadas.`},
+        {prazo:`D-${Math.round(inicioPre*.5)}`,texto:`Boas-vindas no grupo: diga o dia, a hora e o que a pessoa vai aprender. Peça que confirmem presença com um emoji.`},
+        {prazo:`D-${Math.round(inicioPre*.4)}`,texto:`Poste uma história real (sua ou de cliente) que mostre a dor "${dor}" e que ela tem solução.`},
+        {prazo:`D-${Math.round(inicioPre*.3)}`,texto:`Poste uma dica rápida e útil que já gere um pequeno resultado.`},
+        {prazo:`D-3`,texto:`Peça para cada pessoa do grupo convidar mais uma com o mesmo problema.`},
+        {prazo:`D-1`,texto:`Lembrete forte: link, horário e uma frase de expectativa do que será revelado.`},
+      ]
+    },
+    {
+      chave:"evento", titulo:"Fase 2 · Evento ao vivo", janela:"Dia 0", icone:"🎙️",
+      objetivo:"Entregar valor real e apresentar a oferta no final, com o carrinho abrindo neste dia.",
+      tarefas:[
+        {prazo:"Dia 0",texto:`BLOCO 1 (valor): apresente-se, diga o que a pessoa vai aprender e ensine algo concreto sobre ${d.tema||"seu tema"}.`},
+        {prazo:"Dia 0",texto:`BLOCO 2 (demonstração): mostre o bastidor do seu método e faça a ponte: "isso faz parte de ${produto}".`},
+        {prazo:"Dia 0",texto:`BLOCO 3 (pitch): transformação → entregáveis → preço (${preco}) → bônus para quem está ao vivo → chamada para ação → perguntas.`},
+        {prazo:"Dia 0",texto:`Logo após o evento, poste o link de compra no grupo com a oferta e o prazo final do carrinho.`},
+      ]
+    },
+    {
+      chave:"carrinho", titulo:"Fase 3 · Carrinho aberto", janela:`D+1 até D+${carrinhoDias}`, icone:"🛒",
+      objetivo:`Vender durante os ${carrinhoDias} dias. A maioria das vendas acontece no início e no último dia.`,
+      tarefas:[
+        {prazo:"D+1",texto:`Poste um depoimento ou print de resultado de cliente.`},
+        {prazo:"D+2",texto:`Responda publicamente as dúvidas mais comuns que travam a compra.`},
+        {prazo:"D+3",texto:`Reforce o que está incluído em ${produto} e o bônus por comprar agora.`},
+        {prazo:`D+${carrinhoDias-1}`,texto:`Aviso de "penúltimo dia": a condição especial está acabando. Crie urgência real.`},
+        {prazo:`D+${carrinhoDias}`,texto:`ÚLTIMO DIA: avise pela manhã, à tarde e à noite. Feche o carrinho no horário prometido.`},
+      ]
+    },
+    {
+      chave:"pos", titulo:"Fase 4 · Pós-lançamento", janela:`D+${carrinhoDias+1} em diante`, icone:"🏁",
+      objetivo:"Entregar bem para quem comprou, aprender com os números e preparar o próximo lançamento.",
+      tarefas:[
+        {prazo:`D+${carrinhoDias+1}`,texto:`Dê boas-vindas a quem comprou e explique o primeiro passo dentro de ${produto}.`},
+        {prazo:`D+${carrinhoDias+1}`,texto:`Agradeça quem participou do evento, mesmo quem não comprou.`},
+        {prazo:`D+${carrinhoDias+2}`,texto:`Anote seus números: quantos no grupo, no evento ao vivo, quantas vendas.`},
+        {prazo:`D+${carrinhoDias+3}`,texto:`Mande uma pesquisa rápida para quem não comprou: o que faltou?`},
+      ]
+    }
+  ];
+
+  const offline = semOff
+    ? [`Faça convites privados: áudios ou ligações para as pessoas mais próximas.`,`Peça a 3 a 5 pessoas de confiança que divulguem nos grupos de WhatsApp delas.`,`Grave um convite em vídeo curto e mande individualmente para quem mais tem a ver com o tema.`]
+    : [`Convide pessoalmente quem você encontra no dia a dia.`,`Tenha o QR code do grupo no celular para mostrar na hora.`,`Peça indicações: "você conhece alguém que sofre com ${dor}?".`,`Faça parcerias locais: quem atende o mesmo público pode divulgar.`];
+
+  return {
+    resumo, fases, offline, carrinhoDias,
+    gancho: `Você sofre com ${dor}? Vou te mostrar, ao vivo e de graça, o caminho para resolver isso. Entre no grupo e participe.`,
+    primeiro_passo: `Ainda hoje: defina a data do evento e crie o grupo de WhatsApp. Convide as 5 primeiras pessoas, individualmente, que têm essa dor.`,
+    recado_medo: `${nome?nome+", ":""}o medo que você descreveu é normal. Você não precisa de uma plateia gigante nem de ser perfeita. Execute o checklist passo a passo.`
+  };
+}
+
+async function enviar(d, planoGerado) {
+  const payload = {
+    nomeCompleto: d.nome||"", email: d.email||"", whatsapp: d.whatsapp||"",
+    instagram: d.instagram||"", tipoProduto: d.tipo||"", nomeProduto: d.nomeProduto||"",
+    sobre: d.tema||"", transformacao: d.transformacao||"", incluido: d.entregaveis||"",
+    preco: d.preco||"", publicoIdeal: d.avatar||"", dorPrincipal: d.dorPrincipal||"",
+    quantidadeConvidados: d.audiencia||"", experienciaEvento: d.experiencia||"",
+    prazoEvento: d.prazo||"", contatoPresencial: d.offline||"", travaLancamento: d.medo||"",
+    planoGerado: planoGerado||"", origem: "Site FEX — Vercel"
+  };
+  try {
+    await fetch("/api/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+  } catch(e) { console.warn("Falha no envio:", e); }
+}
+
+function render() {
+  const app = document.getElementById("app");
+  if (report) { app.innerHTML = renderResult(); bindResult(); return; }
+  const step = steps[stepIdx];
+  const total = steps.length;
+  const pct = Math.round((stepIdx/total)*100);
+  const invalid = step.fields.filter(f=>!f.optional&&!data[f.key]?.trim());
+  app.innerHTML = `
+    <div class="progress-bar-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>
+    <div class="step-label">Passo ${stepIdx+1} de ${total}</div>
+    <h2 class="step-title">${step.title}</h2>
+    <p class="step-sub">${step.subtitle}</p>
+    <div id="fields">${step.fields.map(f=>renderField(f)).join("")}</div>
+    ${invalid.length?`<div class="alert-warn">Preencha para continuar: ${invalid.map(f=>f.label.replace(" (opcional)","")).join(", ")}.</div>`:""}
+    <div class="nav">
+      <button class="btn-ghost" id="btnBack" ${stepIdx===0?"disabled":""}>← Voltar</button>
+      ${stepIdx===total-1
+        ?`<button class="btn-primary" id="btnGen" ${invalid.length?"disabled":""}>✨ Gerar meu plano</button>`
+        :`<button class="btn-primary" id="btnNext" ${invalid.length?"disabled":""}>Continuar →</button>`}
+    </div>`;
+  document.getElementById("btnBack")?.addEventListener("click",()=>{stepIdx=Math.max(0,stepIdx-1);render();});
+  document.getElementById("btnNext")?.addEventListener("click",()=>{stepIdx++;render();});
+  document.getElementById("btnGen")?.addEventListener("click", async ()=>{
+    report = buildPlan(data);
+    checked = {};
+    const resumoPlano = report.fases.map(f=>f.titulo).join(" | ");
+    enviar(data, resumoPlano);
+    render();
+  });
+  step.fields.forEach(f=>{
+    if(f.type==="text"||f.type==="textarea"){
+      document.getElementById("field_"+f.key)?.addEventListener("input",e=>{data[f.key]=e.target.value;render();});
+    } else if(f.type==="radio"){
+      f.options.forEach(o=>{
+        document.getElementById("opt_"+f.key+"_"+o.replace(/\s+/g,"_"))?.addEventListener("click",()=>{data[f.key]=o;render();});
+      });
+    }
+  });
+}
+
+function renderField(f) {
+  if(f.type==="text") return `<div class="field"><label>${f.label}</label><input id="field_${f.key}" value="${data[f.key]||""}" placeholder="${f.placeholder||""}"></div>`;
+  if(f.type==="textarea") return `<div class="field"><label>${f.label}</label><textarea id="field_${f.key}" rows="3" placeholder="${f.placeholder||""}">${data[f.key]||""}</textarea></div>`;
+  if(f.type==="radio") return `<div class="field"><label>${f.label}</label>${f.options.map(o=>`<button class="opt-btn ${data[f.key]===o?"active":""}" id="opt_${f.key}_${o.replace(/\s+/g,"_")}">${o}</button>`).join("")}</div>`;
+  return "";
+}
+
+function totalTarefas() { return report.fases.reduce((n,f)=>n+f.tarefas.length,0); }
+function feitas() { return Object.values(checked).filter(Boolean).length; }
+
+function renderResult() {
+  const tt = totalTarefas(), ft = feitas(), pct = tt?Math.round((ft/tt)*100):0;
+  return `
+    <div style="display:flex;align-items:center;gap:8px;color:#6b8e5a;margin-bottom:6px">✅ <span style="font-size:13px;font-weight:600">Seu checklist está pronto</span></div>
+    <h2 class="step-title">Cronograma de lançamento${data.nome?" de "+data.nome.split(" ")[0]:""}</h2>
+    <p style="color:#888;font-size:13px;margin-bottom:18px">📅 Dia 0 = o dia do seu evento. Carrinho aberto por ${report.carrinhoDias} dias.</p>
+    <div class="card card-green" style="font-size:14px;line-height:1.6">${report.resumo}</div>
+    <div class="card">
+      <div class="prog-meta"><span style="font-weight:600">Seu progresso</span><span>${ft}/${tt} · ${pct}%</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:${pct}%"></div></div>
+    </div>
+    ${report.fases.map((fase,fi)=>`
+      <div style="margin-bottom:18px">
+        <div class="fase-header"><div class="fase-icon">${fase.icone}</div><div><div class="fase-title">${fase.titulo}</div><div class="fase-janela">${fase.janela}</div></div></div>
+        <p class="fase-obj">${fase.objetivo}</p>
+        <div class="card">
+          ${fase.tarefas.map((t,ti)=>{
+            const id=`${fase.chave}-${ti}`;const done=!!checked[id];
+            return `<div class="task-row" data-id="${id}">
+              <div class="checkbox ${done?"done":""}">${done?"✓":""}</div>
+              <div><span class="task-prazo">${t.prazo}</span><span class="task-text ${done?"done":""}">${t.texto}</span></div>
+            </div>`;
+          }).join("")}
+        </div>
+      </div>`).join("")}
+    <div class="card"><h4>Convite offline (faça ao longo da fase de pré)</h4><ul class="offline-list">${report.offline.map(o=>`<li>${o}</li>`).join("")}</ul></div>
+    <div class="card"><h4>Frase para convidar</h4><em style="font-size:14px">"${report.gancho}"</em></div>
+    <div class="card card-black"><div class="label">Comece por aqui, ainda hoje</div><div class="content">${report.primeiro_passo}</div></div>
+    <div class="card card-green" style="font-size:14px;line-height:1.6;font-style:italic">${report.recado_medo}</div>
+    <div class="result-actions">
+      <button class="btn-primary" id="btnReset">← Fazer outro plano</button>
+    </div>`;
+}
+
+function bindResult() {
+  document.querySelectorAll(".task-row").forEach(el=>{
+    el.addEventListener("click",()=>{
+      const id=el.dataset.id;
+      checked[id]=!checked[id];
+      document.getElementById("app").innerHTML=renderResult();
+      bindResult();
+    });
+  });
+  document.getElementById("btnReset")?.addEventListener("click",()=>{data={};stepIdx=0;report=null;checked={};render();});
+}
+
+render();
+</script>
+</body>
+</html>
