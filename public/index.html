@@ -215,8 +215,7 @@ async function enviar(d, planoGerado) {
   } catch(e) { console.warn("Falha no envio:", e); }
 }
 
-function render() {
-  function getInvalidFields(step) {
+function getInvalidFields(step) {
   return step.fields.filter(f => {
     const value = data[f.key];
     return !f.optional && (!value || !String(value).trim());
