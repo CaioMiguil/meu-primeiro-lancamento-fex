@@ -216,43 +216,122 @@ async function enviar(d, planoGerado) {
 }
 
 function render() {
+  function getInvalidFields(step) {
+  return step.fields.filter(f => {
+    const value = data[f.key];
+    return !f.optional && (!value || !String(value).trim());
+  });
+}
+
+function updateStepValidation() {
+  if (report) return;
+
+  const step = steps[stepIdx];
+  const invalid = getInvalidFields(step);
+
+  const warn = document.getElementById("validationWarn");
+  const btnNext = document.getElementById("btnNext");
+  const btnGen = document.getElementById("btnGen");
+
+  if (warn) {
+    if (invalid.length) {
+      warn.style.display = "block";
+      warn.innerHTML = `Preencha para continuar: ${invalid.map(f => f.label.replace(" (opcional)", "")).join(", ")}.`;
+    } else {
+      warn.style.display = "none";
+      warn.innerHTML = "";
+    }
+  }
+
+  if (btnNext) btnNext.disabled = invalid.length > 0;
+  if (btnGen) btnGen.disabled = invalid.length > 0;
+}
+
+function render() {
   const app = document.getElementById("app");
-  if (report) { app.innerHTML = renderResult(); bindResult(); return; }
+
+  if (report) {
+    app.innerHTML = renderResult();
+    bindResult();
+    return;
+  }
+
   const step = steps[stepIdx];
   const total = steps.length;
-  const pct = Math.round((stepIdx/total)*100);
-  const invalid = step.fields.filter(f=>!f.optional&&!data[f.key]?.trim());
+  const pct = Math.round((stepIdx / total) * 100);
+  const invalid = getInvalidFields(step);
+
   app.innerHTML = `
     <div class="progress-bar-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>
-    <div class="step-label">Passo ${stepIdx+1} de ${total}</div>
+    <div class="step-label">Passo ${stepIdx + 1} de ${total}</div>
     <h2 class="step-title">${step.title}</h2>
     <p class="step-sub">${step.subtitle}</p>
-    <div id="fields">${step.fields.map(f=>renderField(f)).join("")}</div>
-    ${invalid.length?`<div class="alert-warn">Preencha para continuar: ${invalid.map(f=>f.label.replace(" (opcional)","")).join(", ")}.</div>`:""}
+    <div id="fields">${step.fields.map(f => renderField(f)).join("")}</div>
+    <div id="validationWarn" class="alert-warn" style="${invalid.length ? "" : "display:none;"}">
+      ${invalid.length ? `Preencha para continuar: ${invalid.map(f => f.label.replace(" (opcional)", "")).join(", ")}.` : ""}
+    </div>
     <div class="nav">
-      <button class="btn-ghost" id="btnBack" ${stepIdx===0?"disabled":""}>← Voltar</button>
-      ${stepIdx===total-1
-        ?`<button class="btn-primary" id="btnGen" ${invalid.length?"disabled":""}>✨ Gerar meu plano</button>`
-        :`<button class="btn-primary" id="btnNext" ${invalid.length?"disabled":""}>Continuar →</button>`}
-    </div>`;
-  document.getElementById("btnBack")?.addEventListener("click",()=>{stepIdx=Math.max(0,stepIdx-1);render();});
-  document.getElementById("btnNext")?.addEventListener("click",()=>{stepIdx++;render();});
-  document.getElementById("btnGen")?.addEventListener("click", async ()=>{
-    report = buildPlan(data);
-    checked = {};
-    const resumoPlano = report.fases.map(f=>f.titulo).join(" | ");
-    enviar(data, resumoPlano);
+      <button type="button" class="btn-ghost" id="btnBack" ${stepIdx === 0 ? "disabled" : ""}>← Voltar</button>
+      ${
+        stepIdx === total - 1
+          ? `<button type="button" class="btn-primary" id="btnGen" ${invalid.length ? "disabled" : ""}>✨ Gerar meu plano</button>`
+          : `<button type="button" class="btn-primary" id="btnNext" ${invalid.length ? "disabled" : ""}>Continuar →</button>`
+      }
+    </div>
+  `;
+
+  document.getElementById("btnBack")?.addEventListener("click", () => {
+    stepIdx = Math.max(0, stepIdx - 1);
     render();
   });
-  step.fields.forEach(f=>{
-    if(f.type==="text"||f.type==="textarea"){
-      document.getElementById("field_"+f.key)?.addEventListener("input",e=>{data[f.key]=e.target.value;});
-    } else if(f.type==="radio"){
-      f.options.forEach(o=>{
-        document.getElementById("opt_"+f.key+"_"+o.replace(/\s+/g,"_"))?.addEventListener("click",()=>{data[f.key]=o;render();});
+
+  document.getElementById("btnNext")?.addEventListener("click", () => {
+    const invalidNow = getInvalidFields(step);
+    if (invalidNow.length) {
+      updateStepValidation();
+      return;
+    }
+
+    stepIdx++;
+    render();
+  });
+
+  document.getElementById("btnGen")?.addEventListener("click", async () => {
+    const invalidNow = getInvalidFields(step);
+    if (invalidNow.length) {
+      updateStepValidation();
+      return;
+    }
+
+    report = buildPlan(data);
+    checked = {};
+    const resumoPlano = report.fases.map(f => f.titulo).join(" | ");
+    await enviar(data, resumoPlano);
+    render();
+  });
+
+  step.fields.forEach(f => {
+    if (f.type === "text" || f.type === "textarea") {
+      const el = document.getElementById("field_" + f.key);
+
+      el?.addEventListener("input", e => {
+        data[f.key] = e.target.value;
+        updateStepValidation();
+      });
+    }
+
+    if (f.type === "radio") {
+      f.options.forEach(o => {
+        const id = "opt_" + f.key + "_" + o.replace(/\s+/g, "_");
+        document.getElementById(id)?.addEventListener("click", () => {
+          data[f.key] = o;
+          render();
+        });
       });
     }
   });
+
+  updateStepValidation();
 }
 
 function renderField(f) {
