@@ -16,14 +16,12 @@
     footer .nome { font-weight: 700; font-size: 13px; }
     footer .sub { font-size: 11px; color: #888; margin-top: 3px; }
 
-    /* progress */
     .progress-bar-wrap { height: 4px; background: #E4E0D9; border-radius: 4px; margin-bottom: 26px; }
     .progress-bar { height: 100%; background: #32CD32; border-radius: 4px; transition: width .3s; }
     .step-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 6px; }
     h2.step-title { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
     p.step-sub { color: #888; font-size: 14px; margin-bottom: 24px; }
 
-    /* fields */
     .field { margin-bottom: 22px; }
     .field label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 10px; }
     .field input, .field textarea { width: 100%; padding: 12px 14px; border: 1px solid #CFC8C0; border-radius: 10px; font-size: 14px; font-family: inherit; background: #fff; outline: none; }
@@ -31,7 +29,6 @@
     .opt-btn { display: block; width: 100%; text-align: left; padding: 12px 14px; border: 1.5px solid #CFC8C0; background: #fff; border-radius: 10px; font-size: 14px; font-family: inherit; cursor: pointer; margin-bottom: 8px; }
     .opt-btn.active { border-color: #32CD32; background: #E8F5E9; font-weight: 600; }
 
-    /* nav buttons */
     .nav { display: flex; justify-content: space-between; margin-top: 24px; }
     .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; background: #000; color: #fff; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
     .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -39,12 +36,10 @@
     .btn-ghost:disabled { opacity: 0.3; cursor: not-allowed; }
     .alert-warn { margin-top: 18px; padding: 10px 14px; background: #FEF9E7; border: 1px solid #F4E2A1; border-radius: 8px; font-size: 13px; color: #7a5d00; }
 
-    /* result */
     .card { background: #fff; border: 1px solid #E4E0D9; border-radius: 12px; padding: 16px 18px; margin-bottom: 14px; }
     .card-green { background: #E8F5E9; border-color: #C8E6C9; }
     .card-black { background: #000; color: #fff; border: none; }
     .card h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; border-left: 3px solid #32CD32; padding-left: 8px; }
-    .progress-wrap2 { display: flex; align-items: center; gap: 14px; }
     .prog-meta { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; }
     .prog-meta span:last-child { font-weight: 700; }
     .prog-track { height: 8px; background: #E4E0D9; border-radius: 6px; }
@@ -88,7 +83,7 @@ const steps = [
       { key:"nome", label:"Seu nome completo", type:"text", placeholder:"Ex: Joana Almeida" },
       { key:"email", label:"Seu melhor e-mail", type:"text", placeholder:"voce@email.com" },
       { key:"whatsapp", label:"Seu WhatsApp (com DDD)", type:"text", placeholder:"(11) 90000-0000" },
-      { key:"instagram", label:"@ do Instagram (opcional)", type:"text", placeholder:"@seuperfil", optional:true },
+      { key:"instagram", label:"@ do Instagram (opcional)", type:"text", placeholder:"@seuperfil", optional:true }
     ]
   },
   {
@@ -99,7 +94,7 @@ const steps = [
       { key:"tema", label:"Sobre o que é?", type:"text", placeholder:"Ex: emagrecimento para mães" },
       { key:"transformacao", label:"Qual transformação a pessoa tem ao comprar?", type:"textarea", placeholder:"De onde ela sai e aonde ela chega" },
       { key:"entregaveis", label:"O que está incluído? (módulos, encontros, bônus, suporte)", type:"textarea", placeholder:"Liste tudo que a pessoa recebe" },
-      { key:"preco", label:"Preço que pretende cobrar (R$)", type:"text", placeholder:"Ex: 1997 (ou 'não sei ainda')" },
+      { key:"preco", label:"Preço que pretende cobrar (R$)", type:"text", placeholder:"Ex: 1997 (ou 'não sei ainda')" }
     ]
   },
   {
@@ -107,7 +102,7 @@ const steps = [
     fields: [
       { key:"avatar", label:"Quem é a pessoa ideal para comprar de você?", type:"textarea", placeholder:"Momento de vida, dor, desejo" },
       { key:"dorPrincipal", label:"Qual a DOR número 1 dessa pessoa?", type:"textarea", placeholder:"O problema concreto que ela quer resolver agora" },
-      { key:"audiencia", label:"Quantas pessoas você consegue convidar hoje?", type:"radio", options:["Quase ninguém, vou começar do zero","Algumas dezenas","Algumas centenas","Mais de mil pessoas"] },
+      { key:"audiencia", label:"Quantas pessoas você consegue convidar hoje?", type:"radio", options:["Quase ninguém, vou começar do zero","Algumas dezenas","Algumas centenas","Mais de mil pessoas"] }
     ]
   },
   {
@@ -116,12 +111,29 @@ const steps = [
       { key:"experiencia", label:"Já fez algum evento ou live antes?", type:"radio", options:["Nunca, vai ser a primeira vez","Já fiz lives mas nunca vendi","Já vendi algo, mas pouco"] },
       { key:"prazo", label:"Em quanto tempo quer fazer seu evento?", type:"radio", options:["Em 2 semanas","Em 1 mês","Em 6 a 8 semanas"] },
       { key:"offline", label:"Tem contato presencial com seu público?", type:"radio", options:["Sim, no meu trabalho/cidade","Um pouco","Não, é tudo online"] },
-      { key:"medo", label:"O que mais te trava nesse lançamento?", type:"textarea", placeholder:"Seja honesta, isso me ajuda a te orientar." },
+      { key:"medo", label:"O que mais te trava nesse lançamento?", type:"textarea", placeholder:"Seja honesta, isso me ajuda a te orientar." }
     ]
   }
 ];
 
 let stepIdx = 0, data = {}, checked = {}, report = null;
+
+function maskWhatsAppBR(value) {
+  const digits = String(value || "").replace(/\D/g, "").slice(0, 11);
+
+  if (digits.length <= 2) {
+    return digits ? `(${digits}` : "";
+  }
+
+  const ddd = digits.slice(0, 2);
+  const rest = digits.slice(2);
+
+  if (rest.length <= 5) {
+    return `(${ddd}) ${rest}`;
+  }
+
+  return `(${ddd}) ${rest.slice(0, 5)}-${rest.slice(5, 9)}`;
+}
 
 function buildPlan(d) {
   const nome = (d.nome||"").split(" ")[0]||"";
@@ -148,7 +160,7 @@ function buildPlan(d) {
         {prazo:`D-${Math.round(inicioPre*.4)}`,texto:`Poste uma história real (sua ou de cliente) que mostre a dor "${dor}" e que ela tem solução.`},
         {prazo:`D-${Math.round(inicioPre*.3)}`,texto:`Poste uma dica rápida e útil que já gere um pequeno resultado.`},
         {prazo:`D-3`,texto:`Peça para cada pessoa do grupo convidar mais uma com o mesmo problema.`},
-        {prazo:`D-1`,texto:`Lembrete forte: link, horário e uma frase de expectativa do que será revelado.`},
+        {prazo:`D-1`,texto:`Lembrete forte: link, horário e uma frase de expectativa do que será revelado.`}
       ]
     },
     {
@@ -158,7 +170,7 @@ function buildPlan(d) {
         {prazo:"Dia 0",texto:`BLOCO 1 (valor): apresente-se, diga o que a pessoa vai aprender e ensine algo concreto sobre ${d.tema||"seu tema"}.`},
         {prazo:"Dia 0",texto:`BLOCO 2 (demonstração): mostre o bastidor do seu método e faça a ponte: "isso faz parte de ${produto}".`},
         {prazo:"Dia 0",texto:`BLOCO 3 (pitch): transformação → entregáveis → preço (${preco}) → bônus para quem está ao vivo → chamada para ação → perguntas.`},
-        {prazo:"Dia 0",texto:`Logo após o evento, poste o link de compra no grupo com a oferta e o prazo final do carrinho.`},
+        {prazo:"Dia 0",texto:`Logo após o evento, poste o link de compra no grupo com a oferta e o prazo final do carrinho.`}
       ]
     },
     {
@@ -169,7 +181,7 @@ function buildPlan(d) {
         {prazo:"D+2",texto:`Responda publicamente as dúvidas mais comuns que travam a compra.`},
         {prazo:"D+3",texto:`Reforce o que está incluído em ${produto} e o bônus por comprar agora.`},
         {prazo:`D+${carrinhoDias-1}`,texto:`Aviso de "penúltimo dia": a condição especial está acabando. Crie urgência real.`},
-        {prazo:`D+${carrinhoDias}`,texto:`ÚLTIMO DIA: avise pela manhã, à tarde e à noite. Feche o carrinho no horário prometido.`},
+        {prazo:`D+${carrinhoDias}`,texto:`ÚLTIMO DIA: avise pela manhã, à tarde e à noite. Feche o carrinho no horário prometido.`}
       ]
     },
     {
@@ -179,7 +191,7 @@ function buildPlan(d) {
         {prazo:`D+${carrinhoDias+1}`,texto:`Dê boas-vindas a quem comprou e explique o primeiro passo dentro de ${produto}.`},
         {prazo:`D+${carrinhoDias+1}`,texto:`Agradeça quem participou do evento, mesmo quem não comprou.`},
         {prazo:`D+${carrinhoDias+2}`,texto:`Anote seus números: quantos no grupo, no evento ao vivo, quantas vendas.`},
-        {prazo:`D+${carrinhoDias+3}`,texto:`Mande uma pesquisa rápida para quem não comprou: o que faltou?`},
+        {prazo:`D+${carrinhoDias+3}`,texto:`Mande uma pesquisa rápida para quem não comprou: o que faltou?`}
       ]
     }
   ];
@@ -198,21 +210,36 @@ function buildPlan(d) {
 
 async function enviar(d, planoGerado) {
   const payload = {
-    nomeCompleto: d.nome||"", email: d.email||"", whatsapp: d.whatsapp||"",
-    instagram: d.instagram||"", tipoProduto: d.tipo||"", nomeProduto: d.nomeProduto||"",
-    sobre: d.tema||"", transformacao: d.transformacao||"", incluido: d.entregaveis||"",
-    preco: d.preco||"", publicoIdeal: d.avatar||"", dorPrincipal: d.dorPrincipal||"",
-    quantidadeConvidados: d.audiencia||"", experienciaEvento: d.experiencia||"",
-    prazoEvento: d.prazo||"", contatoPresencial: d.offline||"", travaLancamento: d.medo||"",
-    planoGerado: planoGerado||"", origem: "Site FEX — Vercel"
+    nomeCompleto: d.nome||"",
+    email: d.email||"",
+    whatsapp: d.whatsapp||"",
+    instagram: d.instagram||"",
+    tipoProduto: d.tipo||"",
+    nomeProduto: d.nomeProduto||"",
+    sobre: d.tema||"",
+    transformacao: d.transformacao||"",
+    incluido: d.entregaveis||"",
+    preco: d.preco||"",
+    publicoIdeal: d.avatar||"",
+    dorPrincipal: d.dorPrincipal||"",
+    quantidadeConvidados: d.audiencia||"",
+    experienciaEvento: d.experiencia||"",
+    prazoEvento: d.prazo||"",
+    contatoPresencial: d.offline||"",
+    travaLancamento: d.medo||"",
+    planoGerado: planoGerado||"",
+    origem: "Site FEX — Vercel"
   };
+
   try {
     await fetch("/api/submit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
-  } catch(e) { console.warn("Falha no envio:", e); }
+  } catch(e) {
+    console.warn("Falha no envio:", e);
+  }
 }
 
 function getInvalidFields(step) {
@@ -314,7 +341,14 @@ function render() {
       const el = document.getElementById("field_" + f.key);
 
       el?.addEventListener("input", e => {
-        data[f.key] = e.target.value;
+        if (f.key === "whatsapp") {
+          const masked = maskWhatsAppBR(e.target.value);
+          e.target.value = masked;
+          data[f.key] = masked;
+        } else {
+          data[f.key] = e.target.value;
+        }
+
         updateStepValidation();
       });
     }
@@ -334,14 +368,29 @@ function render() {
 }
 
 function renderField(f) {
-  if(f.type==="text") return `<div class="field"><label>${f.label}</label><input id="field_${f.key}" value="${data[f.key]||""}" placeholder="${f.placeholder||""}"></div>`;
-  if(f.type==="textarea") return `<div class="field"><label>${f.label}</label><textarea id="field_${f.key}" rows="3" placeholder="${f.placeholder||""}">${data[f.key]||""}</textarea></div>`;
-  if(f.type==="radio") return `<div class="field"><label>${f.label}</label>${f.options.map(o=>`<button class="opt-btn ${data[f.key]===o?"active":""}" id="opt_${f.key}_${o.replace(/\s+/g,"_")}">${o}</button>`).join("")}</div>`;
+  if (f.type === "text") {
+    const isWhatsApp = f.key === "whatsapp";
+    return `<div class="field"><label>${f.label}</label><input id="field_${f.key}" value="${data[f.key] || ""}" placeholder="${f.placeholder || ""}" ${isWhatsApp ? 'type="tel" inputmode="numeric" maxlength="15" autocomplete="tel"' : 'type="text"'}></div>`;
+  }
+
+  if (f.type === "textarea") {
+    return `<div class="field"><label>${f.label}</label><textarea id="field_${f.key}" rows="3" placeholder="${f.placeholder||""}">${data[f.key]||""}</textarea></div>`;
+  }
+
+  if (f.type === "radio") {
+    return `<div class="field"><label>${f.label}</label>${f.options.map(o=>`<button type="button" class="opt-btn ${data[f.key]===o?"active":""}" id="opt_${f.key}_${o.replace(/\s+/g,"_")}">${o}</button>`).join("")}</div>`;
+  }
+
   return "";
 }
 
-function totalTarefas() { return report.fases.reduce((n,f)=>n+f.tarefas.length,0); }
-function feitas() { return Object.values(checked).filter(Boolean).length; }
+function totalTarefas() {
+  return report.fases.reduce((n,f)=>n+f.tarefas.length,0);
+}
+
+function feitas() {
+  return Object.values(checked).filter(Boolean).length;
+}
 
 function renderResult() {
   const tt = totalTarefas(), ft = feitas(), pct = tt?Math.round((ft/tt)*100):0;
@@ -386,7 +435,14 @@ function bindResult() {
       bindResult();
     });
   });
-  document.getElementById("btnReset")?.addEventListener("click",()=>{data={};stepIdx=0;report=null;checked={};render();});
+
+  document.getElementById("btnReset")?.addEventListener("click",()=>{
+    data = {};
+    stepIdx = 0;
+    report = null;
+    checked = {};
+    render();
+  });
 }
 
 render();
