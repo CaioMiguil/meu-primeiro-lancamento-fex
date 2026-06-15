@@ -371,11 +371,11 @@ function render() {
 function renderField(f) {
   if (f.type === "text") {
     const isWhatsApp = f.key === "whatsapp";
-    return `<div class="field"><label>${f.label}</label><input id="field_${f.key}" value="${data[f.key] || ""}" placeholder="${f.placeholder || ""}" ${isWhatsApp ? 'type="tel" inputmode="numeric" maxlength="15" autocomplete="tel"' : 'type="text"'}></div>`;
+    return `<div class="field"><label>${f.label}</label><input id="field_${f.key}" value="${escapeHtml(data[f.key] || "")}" placeholder="${f.placeholder || ""}" ${isWhatsApp ? 'type="tel" inputmode="numeric" maxlength="15" autocomplete="tel"' : 'type="text"'}></div>`;
   }
 
   if (f.type === "textarea") {
-    return `<div class="field"><label>${f.label}</label><textarea id="field_${f.key}" rows="3" placeholder="${f.placeholder || ""}">${data[f.key] || ""}</textarea></div>`;
+    return `<div class="field"><label>${f.label}</label><textarea id="field_${f.key}" rows="3" placeholder="${f.placeholder || ""}">${escapeHtml(data[f.key] || "")}</textarea></div>`;
   }
 
   if (f.type === "radio") {
@@ -629,9 +629,9 @@ function renderResult() {
 
   return `
     <div style="display:flex;align-items:center;gap:8px;color:#6b8e5a;margin-bottom:6px">✅ <span style="font-size:13px;font-weight:600">Seu checklist está pronto</span></div>
-    <h2 class="step-title">Cronograma de lançamento${data.nome ? " de " + data.nome.split(" ")[0] : ""}</h2>
+    <h2 class="step-title">Cronograma de lançamento${data.nome ? " de " + escapeHtml(data.nome.split(" ")[0]) : ""}</h2>
     <p style="color:#888;font-size:13px;margin-bottom:18px">📅 Dia 0 = o dia do seu evento. Carrinho aberto por ${report.carrinhoDias} dias.</p>
-    <div class="card card-green" style="font-size:14px;line-height:1.6">${report.resumo}</div>
+    <div class="card card-green" style="font-size:14px;line-height:1.6">${escapeHtml(report.resumo)}</div>
     <div class="card">
       <div class="prog-meta"><span style="font-weight:600">Seu progresso</span><span>${ft}/${tt} · ${pct}%</span></div>
       <div class="prog-track"><div class="prog-fill" style="width:${pct}%"></div></div>
@@ -647,17 +647,17 @@ function renderResult() {
             const done = !!checked[id];
             return `<div class="task-row" data-id="${id}">
               <div class="checkbox ${done ? "done" : ""}">${done ? "✓" : ""}</div>
-              <div><span class="task-prazo">${t.prazo}</span><span class="task-text ${done ? "done" : ""}">${t.texto}</span></div>
+              <div><span class="task-prazo">${t.prazo}</span><span class="task-text ${done ? "done" : ""}">${escapeHtml(t.texto)}</span></div>
             </div>`;
           }).join("")}
         </div>
       </div>
     `).join("")}
 
-    <div class="card"><h4>Convite offline (faça ao longo da fase de pré)</h4><ul class="offline-list">${report.offline.map(o => `<li>${o}</li>`).join("")}</ul></div>
-    <div class="card"><h4>Frase para convidar</h4><em style="font-size:14px">"${report.gancho}"</em></div>
-    <div class="card card-black"><div class="label">Comece por aqui, ainda hoje</div><div class="content">${report.primeiro_passo}</div></div>
-    <div class="card card-green" style="font-size:14px;line-height:1.6;font-style:italic">${report.recado_medo}</div>
+    <div class="card"><h4>Convite offline (faça ao longo da fase de pré)</h4><ul class="offline-list">${report.offline.map(o => `<li>${escapeHtml(o)}</li>`).join("")}</ul></div>
+    <div class="card"><h4>Frase para convidar</h4><em style="font-size:14px">"${escapeHtml(report.gancho)}"</em></div>
+    <div class="card card-black"><div class="label">Comece por aqui, ainda hoje</div><div class="content">${escapeHtml(report.primeiro_passo)}</div></div>
+    <div class="card card-green" style="font-size:14px;line-height:1.6;font-style:italic">${escapeHtml(report.recado_medo)}</div>
 
     <div class="result-actions">
       <button type="button" class="btn-primary" id="btnDownloadWord">📄 Baixar plano em Word</button>
