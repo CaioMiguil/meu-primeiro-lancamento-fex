@@ -62,6 +62,7 @@
     ul.offline-list { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.7; }
   </style>
 </head>
+
 <body>
 <header>
   <div class="logo">Meu Primeiro Lançamento <span>· FEX Educação</span></div>
@@ -136,26 +137,26 @@ function maskWhatsAppBR(value) {
 }
 
 function buildPlan(d) {
-  const nome = (d.nome||"").split(" ")[0]||"";
-  const produto = d.nomeProduto?.trim()||d.tema||"seu produto";
-  const dor = (d.dorPrincipal||"a dor do seu público").trim();
-  const preco = d.preco&&/\d/.test(d.preco)?`R$ ${d.preco.replace(/[^\d.,]/g,"")}`:"o valor que você definir";
-  const zeroAud = d.audiencia?.includes("Quase")||d.audiencia?.includes("dezenas");
+  const nome = (d.nome || "").split(" ")[0] || "";
+  const produto = d.nomeProduto?.trim() || d.tema || "seu produto";
+  const dor = (d.dorPrincipal || "a dor do seu público").trim();
+  const preco = d.preco && /\d/.test(d.preco) ? `R$ ${d.preco.replace(/[^\d.,]/g,"")}` : "o valor que você definir";
+  const zeroAud = d.audiencia?.includes("Quase") || d.audiencia?.includes("dezenas");
   const semOff = d.offline?.includes("Não");
   const novata = d.experiencia?.includes("Nunca");
-  const inicioPre = d.prazo?.includes("2 semanas")?10:d.prazo?.includes("1 mês")?18:30;
+  const inicioPre = d.prazo?.includes("2 semanas") ? 10 : d.prazo?.includes("1 mês") ? 18 : 30;
   const carrinhoDias = 6;
 
-  const resumo = `${nome?nome+", ":""}seu lançamento tem 4 fases: PRÉ (você atrai e aquece o público no grupo de WhatsApp), EVENTO (sua aula ao vivo de 2 a 3h com o pitch no final), CARRINHO ABERTO (os ${carrinhoDias} dias em que você vende) e PÓS (você fecha as últimas vendas e organiza os próximos passos). O Dia 0 é o dia do seu evento. ${novata?"É sua primeira vez, então siga o checklist na ordem, sem pular etapas.":"Use o checklist para não perder nenhuma ação no caminho."}`;
+  const resumo = `${nome ? nome + ", " : ""}seu lançamento tem 4 fases: PRÉ (você atrai e aquece o público no grupo de WhatsApp), EVENTO (sua aula ao vivo de 2 a 3h com o pitch no final), CARRINHO ABERTO (os ${carrinhoDias} dias em que você vende) e PÓS (você fecha as últimas vendas e organiza os próximos passos). O Dia 0 é o dia do seu evento. ${novata ? "É sua primeira vez, então siga o checklist na ordem, sem pular etapas." : "Use o checklist para não perder nenhuma ação no caminho."}`;
 
   const fases = [
     {
       chave:"pre", titulo:"Fase 1 · Pré-lançamento", janela:`D-${inicioPre} até D-1`, icone:"📣",
       objetivo:"Encher o grupo de WhatsApp de pessoas certas e aquecer o desejo antes do evento.",
       tarefas:[
-        {prazo:`D-${inicioPre}`,texto:`Defina data e horário do evento e crie o grupo de WhatsApp. Nome ligado ao resultado, ex: "Evento: ${d.tema||"sua transformação"}".`},
+        {prazo:`D-${inicioPre}`,texto:`Defina data e horário do evento e crie o grupo de WhatsApp. Nome ligado ao resultado, ex: "Evento: ${d.tema || "sua transformação"}".`},
         {prazo:`D-${inicioPre}`,texto:`Escreva sua frase de convite (gancho) e coloque o link do grupo na bio do Instagram e no status do WhatsApp.`},
-        {prazo:`D-${Math.round(inicioPre*.6)}`,texto:zeroAud?`Convide individualmente as primeiras pessoas que já te conhecem. Mande uma a uma, sem vergonha.`:`Avise toda a sua audiência (stories, posts, status) que vai abrir um grupo gratuito com vagas limitadas.`},
+        {prazo:`D-${Math.round(inicioPre*.6)}`,texto:zeroAud ? `Convide individualmente as primeiras pessoas que já te conhecem. Mande uma a uma, sem vergonha.` : `Avise toda a sua audiência (stories, posts, status) que vai abrir um grupo gratuito com vagas limitadas.`},
         {prazo:`D-${Math.round(inicioPre*.5)}`,texto:`Boas-vindas no grupo: diga o dia, a hora e o que a pessoa vai aprender. Peça que confirmem presença com um emoji.`},
         {prazo:`D-${Math.round(inicioPre*.4)}`,texto:`Poste uma história real (sua ou de cliente) que mostre a dor "${dor}" e que ela tem solução.`},
         {prazo:`D-${Math.round(inicioPre*.3)}`,texto:`Poste uma dica rápida e útil que já gere um pequeno resultado.`},
@@ -167,7 +168,7 @@ function buildPlan(d) {
       chave:"evento", titulo:"Fase 2 · Evento ao vivo", janela:"Dia 0", icone:"🎙️",
       objetivo:"Entregar valor real e apresentar a oferta no final, com o carrinho abrindo neste dia.",
       tarefas:[
-        {prazo:"Dia 0",texto:`BLOCO 1 (valor): apresente-se, diga o que a pessoa vai aprender e ensine algo concreto sobre ${d.tema||"seu tema"}.`},
+        {prazo:"Dia 0",texto:`BLOCO 1 (valor): apresente-se, diga o que a pessoa vai aprender e ensine algo concreto sobre ${d.tema || "seu tema"}.`},
         {prazo:"Dia 0",texto:`BLOCO 2 (demonstração): mostre o bastidor do seu método e faça a ponte: "isso faz parte de ${produto}".`},
         {prazo:"Dia 0",texto:`BLOCO 3 (pitch): transformação → entregáveis → preço (${preco}) → bônus para quem está ao vivo → chamada para ação → perguntas.`},
         {prazo:"Dia 0",texto:`Logo após o evento, poste o link de compra no grupo com a oferta e o prazo final do carrinho.`}
@@ -197,37 +198,37 @@ function buildPlan(d) {
   ];
 
   const offline = semOff
-    ? [`Faça convites privados: áudios ou ligações para as pessoas mais próximas.`,`Peça a 3 a 5 pessoas de confiança que divulguem nos grupos de WhatsApp delas.`,`Grave um convite em vídeo curto e mande individualmente para quem mais tem a ver com o tema.`]
-    : [`Convide pessoalmente quem você encontra no dia a dia.`,`Tenha o QR code do grupo no celular para mostrar na hora.`,`Peça indicações: "você conhece alguém que sofre com ${dor}?".`,`Faça parcerias locais: quem atende o mesmo público pode divulgar.`];
+    ? [`Faça convites privados: áudios ou ligações para as pessoas mais próximas.`, `Peça a 3 a 5 pessoas de confiança que divulguem nos grupos de WhatsApp delas.`, `Grave um convite em vídeo curto e mande individualmente para quem mais tem a ver com o tema.`]
+    : [`Convide pessoalmente quem você encontra no dia a dia.`, `Tenha o QR code do grupo no celular para mostrar na hora.`, `Peça indicações: "você conhece alguém que sofre com ${dor}?".`, `Faça parcerias locais: quem atende o mesmo público pode divulgar.`];
 
   return {
     resumo, fases, offline, carrinhoDias,
     gancho: `Você sofre com ${dor}? Vou te mostrar, ao vivo e de graça, o caminho para resolver isso. Entre no grupo e participe.`,
     primeiro_passo: `Ainda hoje: defina a data do evento e crie o grupo de WhatsApp. Convide as 5 primeiras pessoas, individualmente, que têm essa dor.`,
-    recado_medo: `${nome?nome+", ":""}o medo que você descreveu é normal. Você não precisa de uma plateia gigante nem de ser perfeita. Execute o checklist passo a passo.`
+    recado_medo: `${nome ? nome + ", " : ""}o medo que você descreveu é normal. Você não precisa de uma plateia gigante nem de ser perfeita. Execute o checklist passo a passo.`
   };
 }
 
 async function enviar(d, planoGerado) {
   const payload = {
-    nomeCompleto: d.nome||"",
-    email: d.email||"",
-    whatsapp: d.whatsapp||"",
-    instagram: d.instagram||"",
-    tipoProduto: d.tipo||"",
-    nomeProduto: d.nomeProduto||"",
-    sobre: d.tema||"",
-    transformacao: d.transformacao||"",
-    incluido: d.entregaveis||"",
-    preco: d.preco||"",
-    publicoIdeal: d.avatar||"",
-    dorPrincipal: d.dorPrincipal||"",
-    quantidadeConvidados: d.audiencia||"",
-    experienciaEvento: d.experiencia||"",
-    prazoEvento: d.prazo||"",
-    contatoPresencial: d.offline||"",
-    travaLancamento: d.medo||"",
-    planoGerado: planoGerado||"",
+    nomeCompleto: d.nome || "",
+    email: d.email || "",
+    whatsapp: d.whatsapp || "",
+    instagram: d.instagram || "",
+    tipoProduto: d.tipo || "",
+    nomeProduto: d.nomeProduto || "",
+    sobre: d.tema || "",
+    transformacao: d.transformacao || "",
+    incluido: d.entregaveis || "",
+    preco: d.preco || "",
+    publicoIdeal: d.avatar || "",
+    dorPrincipal: d.dorPrincipal || "",
+    quantidadeConvidados: d.audiencia || "",
+    experienciaEvento: d.experiencia || "",
+    prazoEvento: d.prazo || "",
+    contatoPresencial: d.offline || "",
+    travaLancamento: d.medo || "",
+    planoGerado: planoGerado || "",
     origem: "Site FEX — Vercel"
   };
 
@@ -374,69 +375,312 @@ function renderField(f) {
   }
 
   if (f.type === "textarea") {
-    return `<div class="field"><label>${f.label}</label><textarea id="field_${f.key}" rows="3" placeholder="${f.placeholder||""}">${data[f.key]||""}</textarea></div>`;
+    return `<div class="field"><label>${f.label}</label><textarea id="field_${f.key}" rows="3" placeholder="${f.placeholder || ""}">${data[f.key] || ""}</textarea></div>`;
   }
 
   if (f.type === "radio") {
-    return `<div class="field"><label>${f.label}</label>${f.options.map(o=>`<button type="button" class="opt-btn ${data[f.key]===o?"active":""}" id="opt_${f.key}_${o.replace(/\s+/g,"_")}">${o}</button>`).join("")}</div>`;
+    return `<div class="field"><label>${f.label}</label>${f.options.map(o => `<button type="button" class="opt-btn ${data[f.key] === o ? "active" : ""}" id="opt_${f.key}_${o.replace(/\s+/g,"_")}">${o}</button>`).join("")}</div>`;
   }
 
   return "";
 }
 
 function totalTarefas() {
-  return report.fases.reduce((n,f)=>n+f.tarefas.length,0);
+  return report.fases.reduce((n, f) => n + f.tarefas.length, 0);
 }
 
 function feitas() {
   return Object.values(checked).filter(Boolean).length;
 }
 
+function escapeHtml(value) {
+  return String(value || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function gerarDocumentoWordHtml() {
+  const nome = data.nome || "";
+  const primeiroNome = nome.split(" ")[0] || "Aluno";
+  const hoje = new Date().toLocaleDateString("pt-BR");
+
+  const fasesHtml = report.fases.map(fase => `
+    <h2>${escapeHtml(fase.titulo)}</h2>
+    <p><strong>Janela:</strong> ${escapeHtml(fase.janela)}</p>
+    <p><strong>Objetivo:</strong> ${escapeHtml(fase.objetivo)}</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Prazo</th>
+          <th>Tarefa</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${fase.tarefas.map(t => `
+          <tr>
+            <td>${escapeHtml(t.prazo)}</td>
+            <td>${escapeHtml(t.texto)}</td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+  `).join("");
+
+  const offlineHtml = report.offline.map(item => `<li>${escapeHtml(item)}</li>`).join("");
+
+  return `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Plano de Lançamento - ${escapeHtml(primeiroNome)}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      color: #111111;
+      line-height: 1.5;
+      font-size: 12pt;
+    }
+
+    h1 {
+      font-size: 24pt;
+      color: #000000;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 18pt;
+      color: #000000;
+      border-left: 6px solid #32CD32;
+      padding-left: 10px;
+      margin-top: 28px;
+      margin-bottom: 8px;
+    }
+
+    h3 {
+      font-size: 15pt;
+      margin-top: 22px;
+      color: #000000;
+    }
+
+    p {
+      margin: 8px 0;
+    }
+
+    .marca {
+      font-size: 11pt;
+      color: #444444;
+      margin-bottom: 24px;
+    }
+
+    .box {
+      border: 1px solid #dddddd;
+      background: #f7f7f7;
+      padding: 14px;
+      margin: 16px 0;
+    }
+
+    .box-verde {
+      border: 1px solid #b7e4b7;
+      background: #e8f5e9;
+      padding: 14px;
+      margin: 16px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 22px 0;
+    }
+
+    th {
+      background: #000000;
+      color: #32CD32;
+      padding: 8px;
+      border: 1px solid #000000;
+      text-align: left;
+    }
+
+    td {
+      padding: 8px;
+      border: 1px solid #dddddd;
+      vertical-align: top;
+    }
+
+    ul {
+      margin-top: 8px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    .footer {
+      margin-top: 36px;
+      font-size: 10pt;
+      color: #555555;
+      border-top: 1px solid #dddddd;
+      padding-top: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Plano de Lançamento de ${escapeHtml(primeiroNome)}</h1>
+  <p class="marca"><strong>FEX Educação</strong> · Meu Primeiro Lançamento · Gerado em ${hoje}</p>
+
+  <div class="box-verde">
+    <h3>Resumo do plano</h3>
+    <p>${escapeHtml(report.resumo)}</p>
+  </div>
+
+  <h2>Dados preenchidos</h2>
+
+  <table>
+    <tbody>
+      <tr><td><strong>Nome completo</strong></td><td>${escapeHtml(data.nome)}</td></tr>
+      <tr><td><strong>E-mail</strong></td><td>${escapeHtml(data.email)}</td></tr>
+      <tr><td><strong>WhatsApp</strong></td><td>${escapeHtml(data.whatsapp)}</td></tr>
+      <tr><td><strong>Instagram</strong></td><td>${escapeHtml(data.instagram)}</td></tr>
+      <tr><td><strong>Tipo de produto</strong></td><td>${escapeHtml(data.tipo)}</td></tr>
+      <tr><td><strong>Nome do produto</strong></td><td>${escapeHtml(data.nomeProduto)}</td></tr>
+      <tr><td><strong>Sobre o que é</strong></td><td>${escapeHtml(data.tema)}</td></tr>
+      <tr><td><strong>Transformação prometida</strong></td><td>${escapeHtml(data.transformacao)}</td></tr>
+      <tr><td><strong>O que está incluído</strong></td><td>${escapeHtml(data.entregaveis)}</td></tr>
+      <tr><td><strong>Preço pretendido</strong></td><td>${escapeHtml(data.preco)}</td></tr>
+      <tr><td><strong>Pessoa ideal</strong></td><td>${escapeHtml(data.avatar)}</td></tr>
+      <tr><td><strong>Dor principal</strong></td><td>${escapeHtml(data.dorPrincipal)}</td></tr>
+      <tr><td><strong>Quantidade de pessoas que consegue convidar</strong></td><td>${escapeHtml(data.audiencia)}</td></tr>
+      <tr><td><strong>Experiência com evento/live</strong></td><td>${escapeHtml(data.experiencia)}</td></tr>
+      <tr><td><strong>Prazo para fazer o evento</strong></td><td>${escapeHtml(data.prazo)}</td></tr>
+      <tr><td><strong>Contato presencial com o público</strong></td><td>${escapeHtml(data.offline)}</td></tr>
+      <tr><td><strong>Principal trava</strong></td><td>${escapeHtml(data.medo)}</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Frase para convidar</h2>
+  <div class="box">
+    <p><em>${escapeHtml(report.gancho)}</em></p>
+  </div>
+
+  <h2>Comece por aqui, ainda hoje</h2>
+  <div class="box-verde">
+    <p><strong>${escapeHtml(report.primeiro_passo)}</strong></p>
+  </div>
+
+  ${fasesHtml}
+
+  <h2>Convite offline</h2>
+  <p>Faça estas ações ao longo da fase de pré-lançamento:</p>
+  <ul>
+    ${offlineHtml}
+  </ul>
+
+  <h2>Recado final</h2>
+  <div class="box-verde">
+    <p><em>${escapeHtml(report.recado_medo)}</em></p>
+  </div>
+
+  <div class="footer">
+    <p><strong>FEX Educação</strong></p>
+    <p>Única faculdade brasileira especializada em educação corporativa sob medida com validade acadêmica.</p>
+    <p>fexeducacao.edu.br · #sejaFEX</p>
+  </div>
+
+</body>
+</html>
+  `;
+}
+
+function baixarPlanoWord() {
+  if (!report) return;
+
+  const nomeLimpo = (data.nome || "plano")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  const html = gerarDocumentoWordHtml();
+
+  const blob = new Blob(["\ufeff", html], {
+    type: "application/msword;charset=utf-8"
+  });
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = `plano-de-lancamento-${nomeLimpo}.doc`;
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  URL.revokeObjectURL(url);
+}
+
 function renderResult() {
-  const tt = totalTarefas(), ft = feitas(), pct = tt?Math.round((ft/tt)*100):0;
+  const tt = totalTarefas(), ft = feitas(), pct = tt ? Math.round((ft / tt) * 100) : 0;
+
   return `
     <div style="display:flex;align-items:center;gap:8px;color:#6b8e5a;margin-bottom:6px">✅ <span style="font-size:13px;font-weight:600">Seu checklist está pronto</span></div>
-    <h2 class="step-title">Cronograma de lançamento${data.nome?" de "+data.nome.split(" ")[0]:""}</h2>
+    <h2 class="step-title">Cronograma de lançamento${data.nome ? " de " + data.nome.split(" ")[0] : ""}</h2>
     <p style="color:#888;font-size:13px;margin-bottom:18px">📅 Dia 0 = o dia do seu evento. Carrinho aberto por ${report.carrinhoDias} dias.</p>
     <div class="card card-green" style="font-size:14px;line-height:1.6">${report.resumo}</div>
     <div class="card">
       <div class="prog-meta"><span style="font-weight:600">Seu progresso</span><span>${ft}/${tt} · ${pct}%</span></div>
       <div class="prog-track"><div class="prog-fill" style="width:${pct}%"></div></div>
     </div>
-    ${report.fases.map((fase,fi)=>`
+
+    ${report.fases.map((fase, fi) => `
       <div style="margin-bottom:18px">
         <div class="fase-header"><div class="fase-icon">${fase.icone}</div><div><div class="fase-title">${fase.titulo}</div><div class="fase-janela">${fase.janela}</div></div></div>
         <p class="fase-obj">${fase.objetivo}</p>
         <div class="card">
-          ${fase.tarefas.map((t,ti)=>{
-            const id=`${fase.chave}-${ti}`;const done=!!checked[id];
+          ${fase.tarefas.map((t, ti) => {
+            const id = `${fase.chave}-${ti}`;
+            const done = !!checked[id];
             return `<div class="task-row" data-id="${id}">
-              <div class="checkbox ${done?"done":""}">${done?"✓":""}</div>
-              <div><span class="task-prazo">${t.prazo}</span><span class="task-text ${done?"done":""}">${t.texto}</span></div>
+              <div class="checkbox ${done ? "done" : ""}">${done ? "✓" : ""}</div>
+              <div><span class="task-prazo">${t.prazo}</span><span class="task-text ${done ? "done" : ""}">${t.texto}</span></div>
             </div>`;
           }).join("")}
         </div>
-      </div>`).join("")}
-    <div class="card"><h4>Convite offline (faça ao longo da fase de pré)</h4><ul class="offline-list">${report.offline.map(o=>`<li>${o}</li>`).join("")}</ul></div>
+      </div>
+    `).join("")}
+
+    <div class="card"><h4>Convite offline (faça ao longo da fase de pré)</h4><ul class="offline-list">${report.offline.map(o => `<li>${o}</li>`).join("")}</ul></div>
     <div class="card"><h4>Frase para convidar</h4><em style="font-size:14px">"${report.gancho}"</em></div>
     <div class="card card-black"><div class="label">Comece por aqui, ainda hoje</div><div class="content">${report.primeiro_passo}</div></div>
     <div class="card card-green" style="font-size:14px;line-height:1.6;font-style:italic">${report.recado_medo}</div>
+
     <div class="result-actions">
-      <button class="btn-primary" id="btnReset">← Fazer outro plano</button>
-    </div>`;
+      <button type="button" class="btn-primary" id="btnDownloadWord">📄 Baixar plano em Word</button>
+      <button type="button" class="btn-primary" id="btnReset">← Fazer outro plano</button>
+    </div>
+  `;
 }
 
 function bindResult() {
-  document.querySelectorAll(".task-row").forEach(el=>{
-    el.addEventListener("click",()=>{
-      const id=el.dataset.id;
-      checked[id]=!checked[id];
-      document.getElementById("app").innerHTML=renderResult();
+  document.querySelectorAll(".task-row").forEach(el => {
+    el.addEventListener("click", () => {
+      const id = el.dataset.id;
+      checked[id] = !checked[id];
+      document.getElementById("app").innerHTML = renderResult();
       bindResult();
     });
   });
 
-  document.getElementById("btnReset")?.addEventListener("click",()=>{
+  document.getElementById("btnDownloadWord")?.addEventListener("click", () => {
+    baixarPlanoWord();
+  });
+
+  document.getElementById("btnReset")?.addEventListener("click", () => {
     data = {};
     stepIdx = 0;
     report = null;
