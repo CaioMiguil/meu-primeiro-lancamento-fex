@@ -246,7 +246,7 @@ function render() {
   });
   step.fields.forEach(f=>{
     if(f.type==="text"||f.type==="textarea"){
-      document.getElementById("field_"+f.key)?.addEventListener("input",e=>{data[f.key]=e.target.value;render();});
+      document.getElementById("field_"+f.key)?.addEventListener("input",e=>{data[f.key]=e.target.value;});
     } else if(f.type==="radio"){
       f.options.forEach(o=>{
         document.getElementById("opt_"+f.key+"_"+o.replace(/\s+/g,"_"))?.addEventListener("click",()=>{data[f.key]=o;render();});
