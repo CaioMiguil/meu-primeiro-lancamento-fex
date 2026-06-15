@@ -1,4 +1,3 @@
-const GOOGLE_SHEETS_URL = process.env.GOOGLE_SHEETS_URL;
 const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL || "https://n8n.fexeducacao.com/webhook/claude-app-primeiro-lancamento-621IuJuiIoEqY2DK";
 
 export default async function handler(req, res) {
@@ -19,65 +18,31 @@ export default async function handler(req, res) {
 
   const payload = req.body || {};
 
-  const results = {
-    googleSheets: { skipped: !GOOGLE_SHEETS_URL },
-    n8n: { skipped: !N8N_WEBHOOK_URL }
-  };
-
   try {
-    if (GOOGLE_SHEETS_URL) {
-      const googleResponse = await fetch(GOOGLE_SHEETS_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8"
-        },
-        body: JSON.stringify(payload)
-      });
+    const n8nResponse = await fetch(N8N_WEBHOOK_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        evento: "primeiro_lancamento_formulario_concluido",
+        origem: "Site FEX — Vercel",
+        enviadoEm: new Date().toISOString(),
+        respostas: payload
+      })
+    });
 
-      results.googleSheets = {
-        ok: googleResponse.ok,
-        status: googleResponse.status,
-        response: await googleResponse.text()
-      };
-    }
-
-    if (N8N_WEBHOOK_URL) {
-      const n8nResponse = await fetch(N8N_WEBHOOK_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          evento: "primeiro_lancamento_formulario_concluido",
-          origem: "Site FEX — Vercel",
-          enviadoEm: new Date().toISOString(),
-          respostas: payload
-        })
-      });
-
-      results.n8n = {
-        ok: n8nResponse.ok,
-        status: n8nResponse.status,
-        response: await n8nResponse.text()
-      };
-    }
-
-    const hasError =
-      (results.googleSheets && results.googleSheets.ok === false) ||
-      (results.n8n && results.n8n.ok === false);
-
-    return res.status(hasError ? 207 : 200).json({
-      ok: !hasError,
-      results
+    return res.status(n8nResponse.ok ? 200 : 207).json({
+      ok: n8nResponse.ok,
+      status: n8nResponse.status
     });
 
   } catch (error) {
-    console.error("Erro ao enviar integrações:", error);
+    console.error("Erro ao enviar para o n8n:", error);
 
     return res.status(500).json({
       ok: false,
-      error: error.message,
-      results
+      error: error.message
     });
   }
 }
